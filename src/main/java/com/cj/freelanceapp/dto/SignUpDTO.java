@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 
 /**
@@ -53,8 +54,8 @@ public class SignUpDTO {
      * USER ROLE
      */
     private String role;
-    /**
-     * IS ACTIVE
-     */
-    private boolean isActive;
+//    /**
+//     * IS ACTIVE
+//     */
+//    private MultipartFile image;
 }

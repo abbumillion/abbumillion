@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title> Contact Us </title>
     <meta name="description" content="">
@@ -23,7 +24,38 @@
     <link rel="stylesheet" href="resources/css/responsive.css">
 </head>
 <body>
-<jsp:include page="templates/header.jsp"/>
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="/">
+        <img src="resources/images/logo.png" width="50" height="50" class="d-inline-block align-top" alt="">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <h3 class="m-4 odd-row-color" style="color: #ffffff;">Ethio-Freelancing Application</h3>
+
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" style="color: #ffffff;" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+
+            <li class="nav-item active">
+                <a class="nav-link" style="color:#ffffff;" href="/contactus">Contact Us</a>
+            </li>
+
+            <li class="nav-item active">
+                <a class="nav-link" style="color:#ffffff;" href="/about">About</a>
+            </li>
+        </ul>
+        <div >
+            <a style="text-align: right; color: #ffffff;" href="/login">Sign In <i class="fa  fa-lg m-1 font-weight-bold"></i>
+            </a>
+            <a style="text-align: right; color: #ffffff;" href="/signup">Sign Up <i class="fa  fa-lg m-1 font-weight-bold"></i>
+            </a>
+        </div>
+    </div>
+</nav>
 <!-- Hero Area Start-->
 <div class="slider-area h-100 ">
     <div class="h-100" data-background="resources/img/hero/about.jpg">

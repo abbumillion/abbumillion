@@ -4,12 +4,17 @@ package com.cj.freelanceapp.controller;
 import com.cj.freelanceapp.ServiceImp.FreelancerServiceImp;
 import com.cj.freelanceapp.ServiceImp.SkillServiceImp;
 import com.cj.freelanceapp.dto.FreelancerDTO;
+import com.cj.freelanceapp.dto.FreelancerProfileDTO;
 import com.cj.freelanceapp.dto.UserDTO;
+import com.cj.freelanceapp.exception.EthioFreelancingApplicationException;
+import com.cj.freelanceapp.helpers.EDUCATIONLEVEL;
 import com.cj.freelanceapp.model.Freelancer;
+import com.cj.freelanceapp.model.Skill;
 import com.cj.freelanceapp.model.User;
 import com.cj.freelanceapp.security.SuccessfullLoginHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -81,6 +86,7 @@ public class FreelancerController {
                                             .phoneNumber(freelancer.getUser().getPhoneNumber())
                                             .role(freelancer.getUser().getRole())
                                             .rating(freelancer.getRating())
+                                            .image(freelancer.getUser().getImage())
                                             .build()
                             )
                             .build();
@@ -91,7 +97,7 @@ public class FreelancerController {
          * return new model and view object
          */
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("freelancers",freelancerDTOS);
+        modelAndView.addObject("freelancers", freelancerDTOS);
         return modelAndView;
     }
 
@@ -146,7 +152,7 @@ public class FreelancerController {
         User user = successfullLoginHandler.getUser();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("freelancer-home");
-        modelAndView.addObject("user",user);
+        modelAndView.addObject("user", user);
         return modelAndView;
     }
 
@@ -174,17 +180,87 @@ public class FreelancerController {
      * @return FREELANCER BY CATEGORY
      */
     @RequestMapping("/uploadCV")
-    public String freelancer_category(MultipartFile multipartFile) {
-        System.out.println(multipartFile.getOriginalFilename());
-        String fileName = multipartFile.getOriginalFilename();
+    public ModelAndView freelancer_category(@RequestParam("cv") MultipartFile cv) {
+        Freelancer freelancer = freelancerServiceImp.getFreelancerByUser(successfullLoginHandler.getUser());
+        String fileName = cv.getOriginalFilename();
         try {
-            multipartFile.transferTo(new File("C:\\Users\\Thinkpad\\Desktop\\FYP\\freelanceapp\\FreelancerCVs\\"+fileName));
+            if (!cv.isEmpty()) {
+                cv.transferTo(new File("C:\\Users\\Thinkpad\\Desktop\\FYP\\freelanceapp\\FreelancerCVs\\" + fileName));
+                freelancer.setCv(fileName);
+            } else {
+                throw new EthioFreelancingApplicationException();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "job_category";
+        return new ModelAndView("successfullupload");
     }
 
+    /**
+     * FREELANCER PROFILE REQUEST HANDLER
+     *
+     * @return
+     */
+    @RequestMapping("/freelancerprofile")
+    public ModelAndView freelancerProfile() {
+        Freelancer freelancer = freelancerServiceImp.getFreelancerByUser(successfullLoginHandler.getUser());
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("freelancer", freelancer);
+        return modelAndView;
+
+    }
+
+    @RequestMapping("/buildprofile")
+    public ModelAndView buildProfile() {
+        Freelancer freelancer = freelancerServiceImp.getFreelancerByUser(successfullLoginHandler.getUser());
+        List<Skill> skills = skillServiceImp.all_skill();
+        List<String> els = new ArrayList<>();
+        for (EDUCATIONLEVEL educationlevel : EDUCATIONLEVEL.values())
+        {
+            els.add(educationlevel.name());
+        }
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("skills", skills);
+        modelAndView.addObject("els",els);
+        modelAndView.setViewName("buildprofile");
+        return modelAndView;
+
+    }
+
+        @RequestMapping("/saveprofile")
+    public ModelAndView buildProfile(FreelancerProfileDTO freelancerProfileDTO) {
+            /**
+             * GET FREELANCER BY USING LOGGED IN USER ACCOUNT
+             */
+        Freelancer freelancer = freelancerServiceImp.getFreelancerByUser(successfullLoginHandler.getUser());
+            /**
+             * GET SKILL CHOOSEN BY THE USER
+             */
+        Skill skill = skillServiceImp.getSkillBySkillName(freelancerProfileDTO.getSkill());
+            /**
+             * CONVERT DTO DATA TO FREELANCER SETTERS
+             */
+        freelancer.setAvailability(freelancerProfileDTO.getAvailability());
+        freelancer.setBio(freelancerProfileDTO.getBio());
+        freelancer.setEducationLevel(freelancerProfileDTO.getEducationLevel());
+        freelancer.setSkill(skill);
+            /**
+             * SAVE THE FREELANCER TO THE DATABASE
+             */
+        freelancerServiceImp.add_freelancer(freelancer);
+            /**
+             *
+             */
+        ModelAndView modelAndView = new ModelAndView();
+            /**
+             * REDIRECT IT THE LOGIN PAGE
+             */
+        modelAndView.setViewName("freelancerprofile");
+            /**
+             * RETURN THE MODEL AND VIEW OBJECT
+             */
+        return modelAndView;
+    }
 
 
 

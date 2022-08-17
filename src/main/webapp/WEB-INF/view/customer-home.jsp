@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>Customer Home</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="stylesheet" href="resources/css/bootstrap.min.css">
     <link rel="stylesheet" href="resources/css/owl.carousel.min.css">
     <link rel="stylesheet" href="resources/css/flaticon.css">
@@ -37,9 +38,6 @@
                                 <input type="hidden" name="size" value="${maxTraySize}"/>
                                 <input class="btn btn-outline-primary my-2 my-sm-0" value="Search" type="submit">
                             </form>
-                        </li>
-                        <li class="text-right">
-                            <a href="/search">Advanced Search</a>
                         </li>
                     </ul>
                 </div>

@@ -16,7 +16,6 @@ import java.util.stream.IntStream;
 
 @Component
 public class InitialSetup {
-
     @Autowired
     private AdminServiceImp adminServiceImp;
     @Autowired
@@ -28,7 +27,6 @@ public class InitialSetup {
     @Autowired
     private FeedbackServiceImp feedbackServiceImp;
     Faker faker;
-
     @PostConstruct
     public void initIt() throws Exception {
         faker = new Faker();

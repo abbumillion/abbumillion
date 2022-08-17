@@ -84,4 +84,6 @@ public interface UserService extends UserDetailsService {
      * @return
      */
     List<User> searchBy(String keyword, String criteria);
+
+    User updateUser(long id,User user);
 }

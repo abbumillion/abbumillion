@@ -55,5 +55,9 @@ public class UserDTO {
      * RATING
      */
     private int rating;
+    /**
+     * IMAGE
+     */
+    private String image;
 
 }

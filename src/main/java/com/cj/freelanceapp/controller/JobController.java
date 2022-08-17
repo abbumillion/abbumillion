@@ -123,9 +123,8 @@ public class JobController
     }
 
     @RequestMapping("/api/myjobs")
-    public String myJob(long id) {
-        // getting all job posted by a single customer
-        return "myjobs.jsp";
+    public List<Job> myJob(long id) {
+        return jobServiceImp.all_job();
     }
 
     /**
@@ -146,15 +145,12 @@ public class JobController
         authorities.forEach(e -> {
             list.add(e.getAuthority());
         });
-        ModelAndView modelAndView = new ModelAndView("jobs");
+        ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("jobs");
-        Page<Job> allJobs = jobServiceImp.listJobs(PageRequest.of(page, size, Sort.by("posted")));
+        List<Job> allJobs = jobServiceImp.all_job();
         modelAndView.addObject("allJobs", allJobs);
-        modelAndView.addObject("maxTraySize", size);
-        modelAndView.addObject("currentPage", page);
         return modelAndView;
     }
-
 
     @RequestMapping("/myjobs")
     public ModelAndView myJobs(@RequestParam(value = "page", defaultValue = "0", required = false) Integer page,
@@ -162,20 +158,16 @@ public class JobController
                                HttpServletRequest request, HttpServletResponse response) {
         Collection<SimpleGrantedAuthority> authorities = (Collection<SimpleGrantedAuthority>)
                 SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-
         List<String> list = new ArrayList<>();
         authorities.forEach(e -> {
             list.add(e.getAuthority());
         });
-        ModelAndView modelAndView = new ModelAndView("jobs");
-        modelAndView.setViewName("jobs");
-        Page<Job> allJobs = jobServiceImp.listJobs(PageRequest.of(page, size, Sort.by("posted")));
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("myjobs");
+        List<Job> allJobs = jobServiceImp.my_jobs(customerServiceImp.findCustomerByUser(successfullLoginHandler.getUser()));
         modelAndView.addObject("allJobs", allJobs);
-        modelAndView.addObject("maxTraySize", size);
-        modelAndView.addObject("currentPage", page);
         return modelAndView;
     }
-
     /**
      * @param job
      * @return
@@ -184,7 +176,6 @@ public class JobController
     public String editJob(JobDTO job) {
         return "editjob.jsp";
     }
-
     /**
      * @param job
      * @return

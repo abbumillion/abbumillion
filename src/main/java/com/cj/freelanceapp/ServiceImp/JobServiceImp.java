@@ -1,6 +1,7 @@
 package com.cj.freelanceapp.ServiceImp;
 
 
+import com.cj.freelanceapp.model.Customer;
 import com.cj.freelanceapp.model.Job;
 import com.cj.freelanceapp.repository.JobRepo;
 import com.cj.freelanceapp.service.JobService;
@@ -15,7 +16,6 @@ import java.util.List;
 public class JobServiceImp implements JobService {
 	@Autowired
 	private JobRepo jobRepo;
-
 	/**
 	 * ADD JOB TO DATABASE
 	 * @param job
@@ -49,6 +49,18 @@ public class JobServiceImp implements JobService {
 		return jobRepo.findAll();
 	}
 
+	/**
+	 * GET ALL JOBS RELATED TO SPECIFIC CUSTOMER
+	 * @param customer
+	 * @return
+	 */
+	@Override
+	public List<Job> my_jobs(Customer customer) {
+		/**
+		 *
+		 */
+		return jobRepo.findByCustomer(customer);
+	}
 
 
 	/**
@@ -58,10 +70,10 @@ public class JobServiceImp implements JobService {
 	 */
 	@Override
 	public Page<Job> listJobs(Pageable pageable)
-	/**
-	 *
-	 */
 	{
+		/**
+		 *
+		 */
 		return jobRepo.findAll(pageable);
 	}
 

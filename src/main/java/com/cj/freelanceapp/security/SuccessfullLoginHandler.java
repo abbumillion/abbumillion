@@ -36,6 +36,11 @@ public class SuccessfullLoginHandler extends SavedRequestAwareAuthenticationSucc
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws ServletException, IOException {
+        System.out.println(authentication.getPrincipal());
+        if (user != null) {
+            System.out.println(user);
+            user = null;
+        }
         /**
          * REDIRECTING STRING
          */
@@ -67,6 +72,7 @@ public class SuccessfullLoginHandler extends SavedRequestAwareAuthenticationSucc
     }
 
     public User getUser() {
+
         return user;
     }
 }

@@ -139,6 +139,11 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public User updateUser(long id, User user) {
+        return userRepository.save(user);
+    }
+
     /**
      * @param email
      * @return

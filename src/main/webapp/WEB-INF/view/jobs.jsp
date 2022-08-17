@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>Jobs</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="stylesheet" href="resources/css/bootstrap.min.css">
     <link rel="stylesheet" href="resources/css/owl.carousel.min.css">
     <link rel="stylesheet" href="resources/css/flaticon.css">
@@ -18,7 +19,6 @@
     <link rel="stylesheet" href="resources/css/style.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="shortcut icon" type="image/x-icon" href="resources/img/favicon.ico">
-
 </head>
 <body>
 <jsp:include page="templates/freelancerheader.jsp"/>
@@ -36,27 +36,24 @@
                         <input class="btn btn-primary " value="Search" type="submit">
                     </form>
                 </li>
-                <li class="text-center">
-                    <a class="page-link" href="/search">Advanced Search</a>
-                </li>
             </ul>
         </div>
-        <c:forEach var="job" items="${allJobs.content}">
+        <c:forEach var="job" items="${allJobs}">
             <div class="card large-width">
                 <div class="card-body">
                     <h5 class="card-title">${job.getSkill().getSkillName()}</h5>
                     <p class="card-text">${job.getDescription()}</p>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item"> ${job.getType()}</li>
-                    <li class="list-group-item">${job.getBudget()}&nbsp;birr</li>
+                    <li class="list-group-item">Job Type: ${job.getType()}</li>
+                    <li class="list-group-item">Salary :${job.getBudget()}&nbsp;birr</li>
                     <li class="list-group-item">Education Level :${job.getEducationLevel()}</li>
                 </ul>
                 <div class="card-footer text-muted">
                     Posted on: ${job.getPosted()} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; End Date : ${job.getEndDate()}
                 </div>
                 <div class="card-body">
-                    <button class="btn" onclick="applyForJob(${job.getJobId()})">Apply</button>
+                    <a class="btn" href="/applyForJob${job.getJobId()}">Apply</a>
                 </div>
             </div>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -93,47 +90,5 @@
 <!-- Jquery Plugins, main Jquery -->
 <script src="resources/js/plugins.js"></script>
 <script src="resources/js/main.js"></script>
-
-<%--<script>--%>
-<%--    function applyForJob(id) {--%>
-<%--        console.log('save Data -  ' + id)--%>
-<%--        // new job data--%>
-<%--        var job = $('#skill' + id).val();--%>
-<%--        var educationlevel = $('#educationlevel_' + id).val();--%>
-<%--        var description = $('#description' + id).val();--%>
-<%--        var educationlevel = $('#educationlevel_' + id).val();--%>
-<%--        if (fname == "") {--%>
-<%--            $('#text_fname_' + id).css('border-color', 'red');--%>
-<%--            return;--%>
-<%--        }--%>
-<%--        if (lname == "") {--%>
-<%--            $('#text_lname_' + id).css('border-color', 'red');--%>
-<%--            return;--%>
-<%--        }--%>
-<%--        $.ajax({--%>
-<%--            type: "POST",--%>
-<%--            url: "/applyforjob",--%>
-<%--            contentType: "application/json",--%>
-<%--            dataType: "json",--%>
-<%--            data: JSON.stringify({--%>
-<%--                id: id,--%>
-<%--                firstName: fname,--%>
-<%--                lastName: lname--%>
-<%--            }),--%>
-<%--            success: function (data, textStatus, xhr) {--%>
-<%--                console.log("success  ---> ");--%>
-<%--                window.location = "/";--%>
-
-<%--            },--%>
-<%--            error: function (data, xhr, textStatus) {--%>
-<%--                console.log("failure ---> ");--%>
-<%--                console.log(JSON.stringify(xhr));--%>
-<%--            }--%>
-<%--        });--%>
-<%--    }--%>
-
-<%--</script>--%>
-
-
 </body>
 </html>

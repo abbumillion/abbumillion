@@ -5,9 +5,12 @@ import com.cj.freelanceapp.dto.CustomerDTO;
 import com.cj.freelanceapp.dto.UserDTO;
 import com.cj.freelanceapp.exception.InvalidAdminException;
 import com.cj.freelanceapp.model.Customer;
+import com.cj.freelanceapp.model.Freelancer;
+import com.cj.freelanceapp.security.SuccessfullLoginHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +25,7 @@ public class CustomerController {
      */
     @Autowired
     private CustomerServiceImp customerServiceImp;
+    private SuccessfullLoginHandler successfullLoginHandler;
     /**
      *
      * @return
@@ -84,5 +88,14 @@ public class CustomerController {
             throw new InvalidAdminException("Admin  not found");
         }
     }
+
+//    @RequestMapping("/customerprofile")
+//    public ModelAndView freelancerProfile() {
+//        Customer customer = customerServiceImp.findCustomerByUser(successfullLoginHandler.getUser());
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.addObject("customer", freelancer);
+//        return modelAndView;
+//
+//    }
 
 }

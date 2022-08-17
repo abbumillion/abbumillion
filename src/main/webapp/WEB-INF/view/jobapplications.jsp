@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>Job Applications</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="stylesheet" href="resources/css/bootstrap.min.css">
     <link rel="stylesheet" href="resources/css/owl.carousel.min.css">
     <link rel="stylesheet" href="resources/css/flaticon.css">

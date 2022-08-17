@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>Freelancer Home</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="stylesheet" href="resources/css/bootstrap.min.css">
     <link rel="stylesheet" href="resources/css/owl.carousel.min.css">
     <link rel="stylesheet" href="resources/css/flaticon.css">
@@ -36,11 +37,8 @@
                                        aria-label="Search">
                                 <input type="hidden" name="page" value="0"/>
                                 <input type="hidden" name="size" value="${maxTraySize}"/>
-                                <input class="btn btn-outline-primary " value="Search" type="submit">
+                                <input class="btn btn-outline-primary" value="Search" type="submit">
                             </form>
-                        </li>
-                        <li class="btn btn-outline-primary">
-                            <a href="/search">Advanced Search</a>
                         </li>
                     </ul>
                 </div>
@@ -48,6 +46,10 @@
                     <p>Welcome Mr/s.${user.getFullName()}</p>
                 </div>
     </div>
+
+
+
+
     <div class="online-cv cv-bg section-overly pt-90 pb-120" data-background="resources/img/gallery/cv_bg.jpg">
         <div class="container">
             <div class="row justify-content-center">
@@ -55,7 +57,7 @@
                     <div class="cv-caption text-center">
                         <p class="pera1">FEATURED TOURS Packages</p>
                         <p class="pera2"> Make a Difference with Your Online Resume!</p>
-                        <a href="/uploadcv" class="border-btn2 border-btn4">Upload your cv</a>
+                        <a href="/uploadCV" class="border-btn2 border-btn4">Upload your cv</a>
                     </div>
                 </div>
             </div>

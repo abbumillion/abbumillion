@@ -3,6 +3,7 @@ package com.cj.freelanceapp.service;
 
 import com.cj.freelanceapp.model.Freelancer;
 import com.cj.freelanceapp.model.Skill;
+import com.cj.freelanceapp.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -59,4 +60,10 @@ public interface FreelancerService {
      * @return
      */
     Page<Freelancer> searchByTerm(String fullName, Pageable pageable);
+
+    Freelancer getFreelancerByUser(User user);
+
+    List<Freelancer> getAllByAvailability(String availability);
+
+    List<Freelancer> getAllBySkill(String skill);
 }

@@ -11,11 +11,11 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="/">News Feed<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/freelancerhome">Home<span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="/jobform">Messages</a>
-            </li>
+<%--            <li class="nav-item active">--%>
+<%--                <a class="nav-link" href="/jobform">Messages</a>--%>
+<%--            </li>--%>
             <li class="nav-item active">
                 <a class="nav-link" href="/jobs">Jobs</a>
             </li>
@@ -23,10 +23,7 @@
                 <a class="nav-link" href="/jobapplications">Job Applications</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="/profile">My Profile</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="/contactus">Contact Us</a>
+                <a class="nav-link" href="/freelancerprofile">My Profile</a>
             </li>
         </ul>
         <div>

@@ -26,11 +26,11 @@
 <section>
     <div class="container">
         <div class=" justify-content-center ">
-            <h4 class="card-title">Sign Up</h4>
+            <h4 class="card-title text-center">Sign Up</h4>
             <c:if test="${not empty param.error}">
                 <label id="error" class="alert alert-danger">${param.error}</label>
             </c:if>
-            <div class="brand">
+            <div class="brand justify-content-center">
                 <img src="resources/images/logo.png">
             </div>
             <form action="/register" method="POST" modelAttribute="signUpDTO">
@@ -64,12 +64,8 @@
                         <option value="CUSTOMER">Customer</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label  for="image">Upload Image </label>
-                    <input id="image" type="file" class="form-control"  name="image"/>
-                </div>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                <div class="form-group ">
+                <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-block">
                         Sign Up
                     </button>

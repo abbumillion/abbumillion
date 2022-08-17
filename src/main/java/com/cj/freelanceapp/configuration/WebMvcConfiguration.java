@@ -18,6 +18,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
     /**
      * method for adding all views in to the
      * spring boot container
+     *
      * @param registry
      */
     @Override
@@ -38,7 +39,10 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
          * about page
          */
         registry.addViewController("/about").setViewName("about");
-        registry.addViewController("/uploadcv").setViewName("uploadcv");
+        /**
+         * successful cv/file uploaded
+         */
+        registry.addViewController("/successfullupload").setViewName("successfullupload");
 
         /**
          * contact us page
@@ -53,9 +57,13 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
          */
         registry.addViewController("/freelancerhome").setViewName("freelancer-home");
         /**
-         * profile page
+         * customer profile
          */
         registry.addViewController("/profile").setViewName("profile");
+        /**
+         * freelancer profile
+         */
+        registry.addViewController("/freelancerprofile").setViewName("freelancerprofile");
         /**
          * add job skill page
          */
@@ -95,7 +103,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
         /**
          * job skills
          */
-        registry.addViewController("/page").setViewName("skills");
+        registry.addViewController("/uploadimage").setViewName("uploadimage");
         /**
          * skill search
          */
@@ -103,12 +111,14 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
         /**
          * FREELANCER REGISTRATION VIEW
          */
-        registry.addViewController("/freelancerregistration").setViewName("freelancerregistration");
+        registry.addViewController("/buildprofile").setViewName("buildprofile");
     }
+
     /**
      * this method is for
      * registering all necessary resources for the application
      * container to run
+     *
      * @param registry
      */
     @Override
@@ -140,7 +150,8 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
         /**
          * DOCUMENTATION FOLDER
          */
-        registry.addResourceHandler("/Doc/**").addResourceLocations("/Doc/");
+        registry.addResourceHandler("/UserImages/**").addResourceLocations("file:" +
+                "C:\\Users\\Thinkpad\\Desktop\\FYP\\freelanceapp\\" + "UserImages\\");
         /**
          * SCSS FOLDER
          */
@@ -155,6 +166,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
      * method for defining the
      * Internal view resolver
      * of the application
+     *
      * @return
      */
     @Bean

@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="resources/css/slick.css">
     <link rel="stylesheet" href="resources/css/nice-select.css">
     <link rel="stylesheet" href="resources/css/style.css">
-    <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="resources/css/style.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -24,49 +23,20 @@
 <section>
     <div class="container">
         <div class=" justify-content-center ">
-            <h4 class="card-title">Sign Up Here</h4>
-            <c:if test="${not empty param.error}">
-                <label id="error" class="alert alert-danger">${param.error}</label>
-            </c:if>
-            <form action="/register" method="POST" modelAttribute="signUpDTO">
-                <div class="form-group">
-                    <label for="fullName">Full Name</label>
-                    <input id="fullName" type="text" class="form-control" name="fullName" required
-                           autofocus>
-                </div>
-                <div class="form-group">
-                    <label for="phoneNumber">Phone Number</label>
-                    <input id="phoneNumber" type="tel" class="form-control" name="phoneNumber" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">E-Mail Address</label>
-                    <input id="email" type="email" class="form-control" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input id="password" type="password" class="form-control" name="password" required
-                           data-eye>
-                </div>
-                <div class="form-group">
-                    <label for="password">Confirm Password</label>
-                    <input id="confirmPassword" type="password" class="form-control" name="confirmPassword" required
-                           data-eye>
-                </div>
-                <div class="form-group">
-                    <label for="role">Role</label>
-                    <select id="role" name="role" class="custom-select form-control" required>
-                        <option value="FREELANCER">Freelancer</option>
-                        <option value="CUSTOMER">Customer</option>
-                    </select>
-                </div>
+            <h4 class="card-title">Upload Image</h4>
+            <form action="/uploadImage" enctype="multipart/form-data" method="POST">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <div class="form-group m-2">
-                    <button type="submit" class="btn btn-primary btn-block">
-                        Sign Up
+                    <div class="form-group">
+                        <label for="image">Upload Image here </label>
+                        <input type="file"  class="form-control" name="image" accept="image/png, image/jpeg" id="image"/>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        Upload
                     </button>
-                </div>
-                <div class="form-group m-2">
-                    <a href="/login" class="page-link">already have account?</a>
+                    <button type="submit" class="btn btn-primary">
+                        Skip
+                    </button>
                 </div>
             </form>
         </div>

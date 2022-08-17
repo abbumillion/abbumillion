@@ -1,6 +1,7 @@
 package com.cj.freelanceapp.ServiceImp;
 
 import com.cj.freelanceapp.model.Freelancer;
+import com.cj.freelanceapp.model.User;
 import com.cj.freelanceapp.repository.FreelancerRepo;
 import com.cj.freelanceapp.service.FreelancerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,7 +88,28 @@ public class FreelancerServiceImp implements FreelancerService
     }
 
     @Override
-    public Page<Freelancer> searchByTerm(String fullName, Pageable pageable) {
+    public Page<Freelancer> searchByTerm(String fullName, Pageable pageable)
+    {
         return null;
+    }
+
+    /**
+     *
+     * @param user
+     * @return
+     */
+    @Override
+    public Freelancer getFreelancerByUser(User user) {
+        return freelancerRepo.getFreelancerByUser(user);
+    }
+
+    @Override
+    public List<Freelancer> getAllByAvailability(String availability) {
+        return freelancerRepo.getAllByAvailability(availability);
+    }
+
+    @Override
+    public List<Freelancer> getAllBySkill(String skill) {
+        return freelancerRepo.getAllBySkill(skill);
     }
 }

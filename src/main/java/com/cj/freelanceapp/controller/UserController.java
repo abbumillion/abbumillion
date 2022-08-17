@@ -3,17 +3,12 @@ package com.cj.freelanceapp.controller;
 import com.cj.freelanceapp.ServiceImp.CustomerServiceImp;
 import com.cj.freelanceapp.ServiceImp.FreelancerServiceImp;
 import com.cj.freelanceapp.ServiceImp.SkillServiceImp;
-import com.cj.freelanceapp.constants.AppConstant;
-import com.cj.freelanceapp.dto.FreelancerProfileDTO;
-import com.cj.freelanceapp.dto.Response;
 import com.cj.freelanceapp.dto.SearchDTO;
 import com.cj.freelanceapp.dto.SignUpDTO;
 import com.cj.freelanceapp.exception.EthioFreelancingApplicationException;
-import com.cj.freelanceapp.helpers.EDUCATIONLEVEL;
 import com.cj.freelanceapp.helpers.ROLE;
 import com.cj.freelanceapp.model.Customer;
 import com.cj.freelanceapp.model.Freelancer;
-import com.cj.freelanceapp.model.Skill;
 import com.cj.freelanceapp.model.User;
 import com.cj.freelanceapp.security.SuccessfullLoginHandler;
 import com.cj.freelanceapp.service.UserService;
@@ -26,12 +21,13 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.support.MultipartFilter;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -67,13 +63,12 @@ public class UserController
      */
     @Autowired
     FreelancerServiceImp freelancerServiceImp;
+    /**
+     * SKILL SERVICE INJECTION
+     */
     @Autowired
     private SkillServiceImp skillServiceImp;
 
-    /**
-     * USER DATA HOLDER
-     */
-    private User user;
     /**
      * MAX PAGE RESULT
      */
@@ -181,21 +176,14 @@ public class UserController
         return modelAndView;
     }
 
-    @ResponseBody
-    @PostMapping("/save")
-    public Response update(@RequestBody User user) {
-        User dbUser = userService.findById(user.getId());
-        dbUser.setFullName(user.getFullName());
-        userService.saveUser(dbUser);
-        return new Response(302, AppConstant.SUCCESS, "/");
-    }
 
-    /**
-     * @param signUpDTO
-     * @return
-     */
     @RequestMapping(value = "register", method = RequestMethod.POST)
-    public ModelAndView register(@ModelAttribute SignUpDTO signUpDTO, MultipartFilter multipartFilter) {
+    public ModelAndView register(@RequestParam("fullName") String fullName,
+                                 @RequestParam("phoneNumber") String phoneNumber,
+                                 @RequestParam("email") String email,
+                                 @RequestParam("password") String password,
+                                 @RequestParam("confirmPassword") String confirmPassword,
+                                 @RequestParam("role") String role) {
         /**
          * model and view object
          */
@@ -203,6 +191,17 @@ public class UserController
         /**
          * redirecting string
          */
+
+        SignUpDTO signUpDTO = SignUpDTO
+                .builder()
+                .fullName(fullName)
+                .phoneNumber(phoneNumber)
+                .email(email)
+                .password(password)
+                .confirmPassword(confirmPassword)
+                .role(role)
+                .build();
+
         String result = "redirect:/";
         User dbUser = userService.findUserByEmail(signUpDTO.getEmail());
         if (signUpDTO.getFullName() == null || signUpDTO.getFullName().trim().isEmpty()) {
@@ -218,16 +217,16 @@ public class UserController
         } else if (StringUtils.isEmpty(signUpDTO.getRole())) {
             result = "redirect:/addNewUser?error=Select a valid Role";
         }
+
         if (dbUser == null) {
             User user = User.builder()
                     .fullName(signUpDTO.getFullName())
                     .email(signUpDTO.getEmail())
-                    .isActive(signUpDTO.isActive())
+//                    .isActive(signUpDTO.isActive())
                     .password(signUpDTO.getPassword())
                     .role(signUpDTO.getRole())
                     .phoneNumber(signUpDTO.getPhoneNumber())
                     .build();
-
             /**
              * CHECK USER ROLE IF IT'S CUSTOMER JUST
              * SAVE THE USER AND CUSTOMER TO DATABASE
@@ -239,24 +238,29 @@ public class UserController
                 /**
                  * CUSTOMER ROLE
                  */
-                userService.saveUser(user);
                 Customer customer =
                         Customer.
                                 builder()
                                 .user(user)
                                 .build();
+                userService.saveUser(user);
                 customerServiceImp.add_customer(customer);
                 modelAndView.setViewName("login");
             } else if (user.getRole().equalsIgnoreCase("FREELANCER")) {
                 /**
                  * FREELANCER ROLE
                  */
-                this.user = user;
-                List els = List.of(EDUCATIONLEVEL.values());
-                List<Skill> skills = skillServiceImp.all_skill();
-                modelAndView.addObject("skills", skills);
-                modelAndView.addObject("els", els);
-                modelAndView.setViewName("freelancerregistration");
+                /**
+                 * CREATE FREELANCER OBJECT AND SAVE IT
+                 * THE DATABASE WITH ITS USER ACCOUNT
+                 */
+                Freelancer freelancer = Freelancer
+                        .builder()
+                        .user(user)
+                        .build();
+                userService.saveUser(user);
+                freelancerServiceImp.add_freelancer(freelancer);
+                modelAndView.setViewName("login");
             }
         } else {
             throw new EthioFreelancingApplicationException();
@@ -264,34 +268,32 @@ public class UserController
         return modelAndView;
     }
 
-    /**
-     * FREELANCER REGISTRATION PAGE
-     * @return LOGIN PAGE
-     */
-    @RequestMapping("/freelancerregistration")
-    public ModelAndView freelancerRegistration(FreelancerProfileDTO freelancerProfileDTO) {
-        Skill skill = skillServiceImp.getSkillBySkillName(freelancerProfileDTO.getSkill());
-        Freelancer freelancer = Freelancer
-                .builder()
-                .availability(freelancerProfileDTO.getAvailability())
-                .bio(freelancerProfileDTO.getBio())
-                .educationLevel(freelancerProfileDTO.getEducationLevel())
-                .skill(skill)
-                .user(user)
-                .build();
-        userService.saveUser(user);
-        freelancerServiceImp.add_freelancer(freelancer);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("login");
-        return  modelAndView;
+    @RequestMapping(value = "/uploadImage")
+    public ModelAndView uploadImage(@RequestParam("image") MultipartFile image) {
+//        System.out.println(image.getOriginalFilename());
+        String fileName = image.getOriginalFilename();
+        String newFileName = "C:\\Users\\Thinkpad\\Desktop\\FYP\\freelanceapp\\UserImages\\" + fileName;
+        try {
+            if (!image.isEmpty()) {
+                image.transferTo(new File(newFileName));
+                String imagePath = "\\UserImages\\"+fileName;
+                imagePath.replace('\\','/');
+                User user = successfullLoginHandler.getUser();
+                user.setImage(imagePath);
+                userService.saveUser(user);
+            } else {
+                throw new EthioFreelancingApplicationException();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new ModelAndView("profile");
     }
-
-
     /**
      * @param userId
      * @return
      */
-    @GetMapping("/delete/{userId}")
+    @RequestMapping("/delete/{userId}")
     public String delete(@PathVariable Long userId) {
         userService.removeById(userId);
         return "redirect:/";
@@ -300,8 +302,7 @@ public class UserController
     /**
      * @return
      */
-    @ResponseBody
-    @GetMapping("/removeAll")
+    @RequestMapping("/removeAll")
     public Boolean removeAll() {
         return userService.removeAll();
     }
@@ -309,35 +310,23 @@ public class UserController
     /**
      * @return
      */
-    @GetMapping("/403")
+    @RequestMapping("/403")
     public ModelAndView accessDenied() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("403");
         return modelAndView;
     }
 
-    /**
-     * @return
-     */
-    @GetMapping("/error")
-    public ModelAndView error() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("error");
-        return modelAndView;
-    }
-
     @RequestMapping("/profile")
     public ModelAndView profile() {
         ModelAndView modelAndView = new ModelAndView("profile");
-        System.out.println(successfullLoginHandler.getUser());
         modelAndView.addObject("user", successfullLoginHandler.getUser());
         return modelAndView;
     }
-
     /**
      * @return
      */
-    @GetMapping("/about")
+    @RequestMapping("/about")
     public ModelAndView about() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("about");

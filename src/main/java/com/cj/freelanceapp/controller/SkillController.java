@@ -21,15 +21,6 @@ import java.util.List;
 public class SkillController {
     @Autowired
     private SkillServiceImp skillServiceImp;
-    @Autowired
-    private UserService userService;
-
-//    @Value("${max.result.per.page}")
-//    private int maxResults;
-//
-//    @Value("${max.card.display.on.pagination.tray}")
-//    private int maxPaginationTraySize;
-
     @RequestMapping("/addskill")
     public String addSkill(Skill skill) {
         try {
@@ -60,44 +51,8 @@ public class SkillController {
         modelAndView.setViewName("skills");
         Page<Skill> allSkills = skillServiceImp.listSkills(PageRequest.of(page, size));
         modelAndView.addObject("allSkills", allSkills);
-//        modelAndView.addObject("maxTraySize", size);
-//        modelAndView.addObject("currentPage", page);
         return modelAndView;
     }
-
-//    @GetMapping("/searchBox")
-//    public ModelAndView searchByTerm(@RequestParam(value = "page", defaultValue = "0", required = false) Integer page,
-//                                     @RequestParam(value = "size", defaultValue = "4", required = false) Integer size,
-//                                     @RequestParam(value = "searchTerm", required = false) String searchTerm) {
-//        ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.setViewName("home");
-//        Page<User> allUsers = userService.searchByTerm(searchTerm.trim(), PageRequest.of(page, size, Sort.by("fullName")));
-//        modelAndView.addObject("allUsers", allUsers);
-//        modelAndView.addObject("maxTraySize", size);
-//        modelAndView.addObject("currentPage", page);
-//        return modelAndView;
-//    }
-//
-//    /**
-//     * @return
-//     */
-//    @GetMapping("/search")
-//    public ModelAndView search() {
-//        ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.setViewName("search");
-//        return modelAndView;
-//    }
-//
-//    @PostMapping("/searchSubmit")
-//    public ModelAndView searchSubmit(@ModelAttribute SearchDTO searchDto) {
-//        List<User> result = userService.searchBy(searchDto.getSearchKeyword(), searchDto.getCriteria());
-//        ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.setViewName("search");
-//        modelAndView.addObject("result", result);
-//        return modelAndView;
-//    }
-
-
     @RequestMapping("/api/editskill")
     public String editSkill(SkillDTO skill) {
         return "editskill.jsp";

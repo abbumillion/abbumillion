@@ -1,6 +1,7 @@
 package com.cj.freelanceapp.service;
 
 
+import com.cj.freelanceapp.model.Customer;
 import com.cj.freelanceapp.model.Job;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +26,13 @@ public interface JobService {
      */
 
     List<Job> all_job();
+
+    /**
+     *
+     * @param customer
+     * @return
+     */
+    List<Job> my_jobs(Customer customer);
 
     /**
      *

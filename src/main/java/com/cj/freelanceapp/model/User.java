@@ -70,12 +70,12 @@ public class User implements UserDetails
     /**
      * COLUMN EMAIL
      */
-    @Column(name = "email", unique = true, length = 200)
+    @Column(name = "email", unique = true, length = 30)
     private String email;
     /**
      * COLUMN PASSWORD
      */
-    @Column(name = "password", length = 200)
+    @Column(name = "password", length = 100)
     private String password;
     /**
      * COLUMN ROLE
@@ -83,11 +83,18 @@ public class User implements UserDetails
     @Column(name = "role")
     private String role;
     /**
+     *
+     */
+    @Column(name = "image")
+    private String image;
+    /**
      * COLUMN IS ACTIVE
      */
     @Column(name = "isActive")
     private boolean isActive;
-
+    /**
+     * OTHER ACCOUNT LINKS
+     */
     /**
      * @return all roles for authorities
      */

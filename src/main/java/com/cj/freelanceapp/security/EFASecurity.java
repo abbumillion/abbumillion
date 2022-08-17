@@ -70,26 +70,31 @@ public class EFASecurity extends WebSecurityConfigurerAdapter
                  * permit all those end point for everyone
                  */
                 .authorizeRequests()
-                .antMatchers("/console/**", "/", "/signup", "/register", "/about", "/resources/**").permitAll()
+                .antMatchers("/console/**", "/", "/signup", "/register", "/about", "/resources/**",
+                        "/UserImages/**", "/contactus/**").permitAll()
                 /**
                  * those end points should be authenticated
                  * not accessable without login
                  */
-                .antMatchers("/customer/home", "customer/freelancers", "/customer/myjobs", "/customer/jobapplication", "/customer/postjob",
-                        "/freelancerhome", "/skills", "/jobs/**", "/jobapplications/**", "/page/**",
-                        "/profile", "/contactus/**").authenticated()
+                .antMatchers(
+                        "/customerhome", "/freelancers",
+                        "/jobapplication", "/postjob", "/freelancerhome", "/skills", "/jobs/**",
+                        "/jobapplications/**", "/myjobs/**", "/profile/**", "/freelancerprofile/**", "/jobform/**",
+                        "/applyform/**", "/buildprofile/**", "/customers/**", "/skills/**", "/uploadCV/**", "/uploadimage/**", "/uploadImage/**"
+                          ).authenticated()
                 /**
                  * authority's  for all rest end points
                  */
-
                 /**
                  * customer authority's
                  */
-//                .antMatchers("/customerhome/**", "/customer/**", "/jobapplications/**", "/jobs/**").hasAuthority(ROLE.CUSTOMER.name())
+                .antMatchers("/customerhome/**", "/jobform/**", "/jobapplications/**", "/myjobs/**",
+                        "/postjob", "/profile/**").hasAuthority(ROLE.CUSTOMER.name())
                 /**
                  * freelancer authority's
                  */
-//                .antMatchers("/freelancerhome/**", "/freelancer/jobs/**", "/jobs/**").hasAuthority(ROLE.FREELANCER.name())
+                .antMatchers("/freelancerhome/**", "/jobs/**", "/freelancerprofile/**", "/uploadCV/**"
+                        , "/buildprofile/**", "/applyform/**").hasAuthority(ROLE.FREELANCER.name())
                 /**
                  * admin authority's
                  */
@@ -103,14 +108,7 @@ public class EFASecurity extends WebSecurityConfigurerAdapter
                  */
                 .formLogin().loginPage("/login")
                 .successHandler(successfullLoginHandler)
-                /**
-                 * default success page for customer
-                 */
-//                .defaultSuccessUrl("/customer/home")
-//                /**
-//                 * default success page for freelancer
-//                 */
-//                .defaultSuccessUrl("/freelancer/home")
+
                 /**
                  * login parameter email
                  */
@@ -141,11 +139,11 @@ public class EFASecurity extends WebSecurityConfigurerAdapter
                 /**
                  * max session time period
                  */
-                .maximumSessions(1)
+                .maximumSessions(5)
                 /**
                  * max session time period prevents login
                  */
-                .maxSessionsPreventsLogin(true)
+                .maxSessionsPreventsLogin(false)
                 /**
                  * expired url
                  */
@@ -214,7 +212,8 @@ public class EFASecurity extends WebSecurityConfigurerAdapter
          * SECURE ALL FOLDERS REGISTERED UNDER THIS
          */
         web.ignoring().antMatchers("/resources/**", "/static/**", "/assets/**",
-                "/fonts/**", "/img/**", "/scss/**", "/Doc/**", "/css/**", "/js/**", "/images/**");
+                "/fonts/**", "/img/**", "/scss/**", "/Doc/**", "/css/**", "/js/**", "/images/**",
+                "/UserImages/**");
     }
 
 }

@@ -26,13 +26,10 @@
     <div class="container">
         <div class=" justify-content-center ">
             <h4 class="card-title">Upload ur CV here!</h4>
-            <c:if test="${not empty param.error}">
-                <label id="error" class="alert alert-danger">${param.error}</label>
-            </c:if>
-            <form action="/uploadCV" method="POST" >
+            <form action="/uploadCV" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="cv">CV</label>
-                    <input id="cv" type="file" class="form-control" name="cv" required>
+                    <input id="cv" type="file"  name="cv" required>
                 </div>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <div class="form-group m-2">

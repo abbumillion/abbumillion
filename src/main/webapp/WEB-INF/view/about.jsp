@@ -57,30 +57,12 @@
     </div>
 </nav>
 <main>
-
-    <!-- Hero Area Start-->
-    <div class="slider-area ">
-        <div class="single-slider section-overly slider-height2 d-flex align-items-center"
-             data-background="resources/img/hero/ab.jpg">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-12">
-                        <div class="hero-cap text-center">
-                            <h2>About us</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Hero Area End -->
-    <!-- How  Apply Process Start-->
     <div class="single-slider slider-height d-flex align-items-center" data-background="resources/img/about/abus.jpg">
         <div class="container">
             <!-- Section Tittle -->
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="section-tittle white-text text-center">
+                    <div class="section-tittle white-text text-center m-5">
                         <span>Owners</span>
                     </div>
                 </div>
@@ -89,7 +71,7 @@
             <div class="row">
                 <div class="col-lg-4 col-md-6">
                     <div class="single-process text-center mb-20">
-                        <div data-background="resources\img\elements\g8.jpg">
+                        <div >
                             <h3>Thomas Fasil</h3>
                             <h6>COO</h6>
                             <h6>Software Engineer</h6>
@@ -101,9 +83,9 @@
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="single-process text-center mb-20">
-                        <div data-background="resources\img\elements\g8.jpg">
+                        <div>
                             <h3>Million Sharbe</h3>
-                            <h6>President &and; CEO</h6>
+                            <h6>President and CEO</h6>
                             <h6>Software Engineer</h6>
                             <h6>Java Developer and System Engineer</h6>
                             <p>apply for jobs that match your skills and after the customer accepts the application then
@@ -116,9 +98,9 @@
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="single-process text-center mb-20">
-                        <div data-background="resources\img\elements\g8.jpg">
+                        <div>
                             <h3>Yordanos Damtew</h3>
-                            <h6>General Manager</h6>
+                            <h6>CTO and General Manager</h6>
                             <h6>Software Engineer</h6>
                             <h6>Graphics Designer</h6>
                             <p>get most exciting and interseting jobs on our platform.</p>
@@ -134,16 +116,10 @@
 </main>
 
 <jsp:include page="templates/copyright.jsp"/>
-
-<!-- JS here -->
-
-<!-- All JS Custom Plugins Link Here here -->
 <script src="resources/js/vendor/modernizr-3.5.0.min.js"></script>
-<!-- Jquery, Popper, Bootstrap -->
 <script src="resources/js/vendor/jquery-1.12.4.min.js"></script>
 <script src="resources/js/popper.min.js"></script>
 <script src="resources/js/bootstrap.min.js"></script>
-<!-- Jquery Mobile Menu -->
 <script src="resources/js/jquery.slicknav.min.js"></script>
 
 <!-- Jquery Slick , Owl-Carousel Plugins -->

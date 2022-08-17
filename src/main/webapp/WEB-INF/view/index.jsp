@@ -4,6 +4,7 @@
 <head>
     <title>welcome page</title>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="stylesheet" href="resources/css/bootstrap.min.css">
     <link rel="stylesheet" href="resources/css/owl.carousel.min.css">
     <link rel="stylesheet" href="resources/css/flaticon.css">
@@ -16,6 +17,8 @@
     <link rel="stylesheet" href="resources/css/slick.css">
     <link rel="stylesheet" href="resources/css/nice-select.css">
     <link rel="stylesheet" href="resources/css/style.css">
+    <link rel="stylesheet" href="resources/css/style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="shortcut icon" type="image/x-icon" href="resources/img/favicon.ico">
 </head>
 <body>
@@ -34,6 +37,11 @@
             <li class="nav-item active">
                 <a class="nav-link" style="color: #ffffff;" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
+
+            <li class="nav-item active">
+                <a class="nav-link" style="color:#ffffff;" href="/contactus">Contact Us</a>
+            </li>
+
             <li class="nav-item active">
                 <a class="nav-link" style="color:#ffffff;" href="/about">About</a>
             </li>
@@ -46,8 +54,6 @@
         </div>
     </div>
 </nav>
-    <!-- Page Content -->
-
 <!-- slider Area Start-->
 <div class="slider-area ">
     <!-- Mobile Menu -->
