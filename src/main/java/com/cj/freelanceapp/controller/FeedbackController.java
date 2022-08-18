@@ -37,7 +37,6 @@ public class FeedbackController {
             Feedback feedback = Feedback.builder()
                     .feedbackContent(feedbackDTO.getContent())
                     .feedbackDate(new Date())
-                    .user(successfullLoginHandler.getUser())
                     .build();
             feedbackServiceImp.add_feedback(feedback);
         }

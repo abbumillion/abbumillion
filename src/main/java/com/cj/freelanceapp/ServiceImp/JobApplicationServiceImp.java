@@ -1,4 +1,6 @@
 package com.cj.freelanceapp.ServiceImp;
+import com.cj.freelanceapp.model.Freelancer;
+import com.cj.freelanceapp.model.Job;
 import com.cj.freelanceapp.model.JobApplication;
 import com.cj.freelanceapp.repository.JobApplicationRepo;
 import com.cj.freelanceapp.service.JobApplicationService;
@@ -30,6 +32,16 @@ public  class JobApplicationServiceImp implements JobApplicationService {
 	@Override
 	public List<JobApplication> all_job_application() {
 		return null;
+	}
+
+	@Override
+	public List<JobApplication> freelancer_job_application(Freelancer freelancer) {
+		return jobApplicationRepo.findByFreelancer(freelancer);
+	}
+
+	@Override
+	public List<JobApplication> job_job_application(Job job) {
+		return jobApplicationRepo.findByJob(job);
 	}
 
 	@Override

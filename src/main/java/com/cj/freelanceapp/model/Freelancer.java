@@ -52,8 +52,6 @@ public class Freelancer {
 	 * LIST OF FEEDBACK MADE BY THIS
 	 * FREELANCER
 	 */
-	@OneToMany
-	private List<Feedback> feedback;
 	/**
 	 * FREELANCER RATING
 	 */

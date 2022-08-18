@@ -66,4 +66,9 @@ public class JobApplication
 	@ManyToOne
 	private Job job;
 
+	@ManyToOne
+	private Freelancer freelancer;
+
+
+
 }

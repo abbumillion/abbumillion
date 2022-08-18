@@ -45,7 +45,7 @@
             </li>
 
             <li class="nav-item active">
-                <a class="nav-link" style="color:#ffffff;" href="/about">About</a>
+                <a class="nav-link" style="color:#ffffff;" href="/about">About Us</a>
             </li>
         </ul>
         <div >
@@ -96,12 +96,9 @@
                             </div>
                         </div>
                     </div>
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <div class="form-group mt-3">
                         <div class="form-group ml-10 mr-10 mt-10 mb-10">
-                            <button type="submit" class="btn btn-primary btn-block">
-                                Send
-                            </button>
+                            <input type="submit" value="Send" class="btn btn-primary btn-block">
                         </div>
                     </div>
                 </form>

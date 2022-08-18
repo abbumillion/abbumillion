@@ -1,6 +1,8 @@
 package com.cj.freelanceapp.service;
 
 
+import com.cj.freelanceapp.model.Freelancer;
+import com.cj.freelanceapp.model.Job;
 import com.cj.freelanceapp.model.JobApplication;
 
 import java.util.List;
@@ -24,6 +26,10 @@ public interface JobApplicationService {
      * @return
      */
     List<JobApplication> all_job_application();
+
+    List<JobApplication> freelancer_job_application(Freelancer freelancer);
+
+    List<JobApplication> job_job_application(Job job);
 
     /**
      *

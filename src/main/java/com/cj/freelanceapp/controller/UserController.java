@@ -2,6 +2,7 @@ package com.cj.freelanceapp.controller;
 
 import com.cj.freelanceapp.ServiceImp.CustomerServiceImp;
 import com.cj.freelanceapp.ServiceImp.FreelancerServiceImp;
+import com.cj.freelanceapp.ServiceImp.JobServiceImp;
 import com.cj.freelanceapp.ServiceImp.SkillServiceImp;
 import com.cj.freelanceapp.dto.SearchDTO;
 import com.cj.freelanceapp.dto.SignUpDTO;
@@ -9,6 +10,7 @@ import com.cj.freelanceapp.exception.EthioFreelancingApplicationException;
 import com.cj.freelanceapp.helpers.ROLE;
 import com.cj.freelanceapp.model.Customer;
 import com.cj.freelanceapp.model.Freelancer;
+import com.cj.freelanceapp.model.Job;
 import com.cj.freelanceapp.model.User;
 import com.cj.freelanceapp.security.SuccessfullLoginHandler;
 import com.cj.freelanceapp.service.UserService;
@@ -31,7 +33,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
 
 @RestController
 public class UserController
@@ -69,6 +70,9 @@ public class UserController
     @Autowired
     private SkillServiceImp skillServiceImp;
 
+    @Autowired
+    private JobServiceImp jobServiceImp;
+
     /**
      * MAX PAGE RESULT
      */
@@ -86,6 +90,8 @@ public class UserController
     @RequestMapping("/")
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("index");
+        List<Job> allJobs = jobServiceImp.all_job().subList(0,5);
+        modelAndView.addObject("allJobs", allJobs);
         return modelAndView;
     }
 
@@ -222,7 +228,6 @@ public class UserController
             User user = User.builder()
                     .fullName(signUpDTO.getFullName())
                     .email(signUpDTO.getEmail())
-//                    .isActive(signUpDTO.isActive())
                     .password(signUpDTO.getPassword())
                     .role(signUpDTO.getRole())
                     .phoneNumber(signUpDTO.getPhoneNumber())
@@ -273,6 +278,7 @@ public class UserController
 //        System.out.println(image.getOriginalFilename());
         String fileName = image.getOriginalFilename();
         String newFileName = "C:\\Users\\Thinkpad\\Desktop\\FYP\\freelanceapp\\UserImages\\" + fileName;
+        ModelAndView modelAndView = new ModelAndView();
         try {
             if (!image.isEmpty()) {
                 image.transferTo(new File(newFileName));
@@ -281,13 +287,21 @@ public class UserController
                 User user = successfullLoginHandler.getUser();
                 user.setImage(imagePath);
                 userService.saveUser(user);
+                if(user.getRole().equalsIgnoreCase(ROLE.FREELANCER.name()))
+                {
+                    modelAndView.setViewName("freelancerprofile");
+                }
+                else if(user.getRole().equalsIgnoreCase(ROLE.CUSTOMER.name()))
+                {
+                    modelAndView.setViewName("profile");
+                }
             } else {
                 throw new EthioFreelancingApplicationException();
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return new ModelAndView("profile");
+        return modelAndView;
     }
     /**
      * @param userId

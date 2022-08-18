@@ -28,17 +28,10 @@ public interface JobService {
     List<Job> all_job();
 
     /**
-     *
      * @param customer
      * @return
      */
     List<Job> my_jobs(Customer customer);
-
-    /**
-     *
-     * @return
-     */
-//    Page<Job> list_Job();
 
     /**
      * @param pageable
@@ -64,4 +57,20 @@ public interface JobService {
      */
 
     void delete_all();
+
+    /**
+     * JOB SEARCH
+     *
+     * @param searchTerm
+     * @return
+     */
+    List<Job> searchJob(String searchTerm);
+
+    /**
+     * MY JOB SEARCH
+     *
+     * @param searchTerm
+     * @return
+     */
+    List<Job> myJobsSearch(String searchTerm, Customer customer);
 }

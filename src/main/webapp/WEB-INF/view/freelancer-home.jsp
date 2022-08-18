@@ -23,33 +23,30 @@
 
 <body>
 <jsp:include page="templates/freelancerheader.jsp"/>
-<section >
+<section>
     <div>
-<%--        <div class="row justify-content-md-center">--%>
-<%--            <div class="card">--%>
-                <div class="card-header">
-                    <h4 class="float-left">
-                    </h4>
-                    <ul class="float-right">
-                        <li>
-                            <form action="/searchBox" class="form-inline my-2 my-lg-0 ">
-                                <input class="form-control mr-sm-2" name="searchTerm" type="search" placeholder="Search"
-                                       aria-label="Search">
-                                <input type="hidden" name="page" value="0"/>
-                                <input type="hidden" name="size" value="${maxTraySize}"/>
-                                <input class="btn btn-outline-primary" value="Search" type="submit">
-                            </form>
-                        </li>
-                    </ul>
-                </div>
-                <div class="card card-body table-responsive">
-                    <p>Welcome Mr/s.${user.getFullName()}</p>
-                </div>
+<%--        <div class="card-header">--%>
+<%--            <h4 class="float-left">--%>
+<%--            </h4>--%>
+<%--            <ul class="float-right">--%>
+<%--                <li>--%>
+<%--                    <form action="/searchBox" class="form-inline my-2 my-lg-0 ">--%>
+<%--                        <input class="form-control mr-sm-2" name="searchTerm" type="search" placeholder="Search"--%>
+<%--                               aria-label="Search">--%>
+<%--                        <input type="hidden" name="page" value="0"/>--%>
+<%--                        <input type="hidden" name="size" value="${maxTraySize}"/>--%>
+<%--                        <div class="form-group m-2">--%>
+<%--                            <button type="submit" class=" btn btn-primary btn-block">Search--%>
+<%--                            </button>--%>
+<%--                        </div>--%>
+<%--                    </form>--%>
+<%--                </li>--%>
+<%--            </ul>--%>
+<%--        </div>--%>
+        <div class="card card-body table-responsive">
+            <p>Welcome Mr/s.${user.getFullName()}</p>
+        </div>
     </div>
-
-
-
-
     <div class="online-cv cv-bg section-overly pt-90 pb-120" data-background="resources/img/gallery/cv_bg.jpg">
         <div class="container">
             <div class="row justify-content-center">
@@ -57,7 +54,7 @@
                     <div class="cv-caption text-center">
                         <p class="pera1">FEATURED TOURS Packages</p>
                         <p class="pera2"> Make a Difference with Your Online Resume!</p>
-                        <a href="/uploadCV" class="border-btn2 border-btn4">Upload your cv</a>
+                        <a href="/uploadcv" class="border-btn2 border-btn4">Upload your cv</a>
                     </div>
                 </div>
             </div>

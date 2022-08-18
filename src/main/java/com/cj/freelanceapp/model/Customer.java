@@ -37,8 +37,6 @@ public class Customer {
 	private List<Job> job;
 	@OneToOne
 	private User user;
-	@OneToMany
-	private List<Feedback> feedback;
 	@Column(nullable = true, unique = false, length = 2)
 	private int rating;
 }

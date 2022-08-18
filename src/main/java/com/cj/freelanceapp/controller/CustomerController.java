@@ -1,11 +1,15 @@
 package com.cj.freelanceapp.controller;
 
 import com.cj.freelanceapp.ServiceImp.CustomerServiceImp;
+import com.cj.freelanceapp.ServiceImp.JobApplicationServiceImp;
+import com.cj.freelanceapp.ServiceImp.JobServiceImp;
 import com.cj.freelanceapp.dto.CustomerDTO;
 import com.cj.freelanceapp.dto.UserDTO;
 import com.cj.freelanceapp.exception.InvalidAdminException;
 import com.cj.freelanceapp.model.Customer;
 import com.cj.freelanceapp.model.Freelancer;
+import com.cj.freelanceapp.model.Job;
+import com.cj.freelanceapp.model.JobApplication;
 import com.cj.freelanceapp.security.SuccessfullLoginHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +29,13 @@ public class CustomerController {
      */
     @Autowired
     private CustomerServiceImp customerServiceImp;
+    @Autowired
     private SuccessfullLoginHandler successfullLoginHandler;
+    @Autowired
+    JobApplicationServiceImp jobApplicationServiceImp;
+    @Autowired
+    JobServiceImp jobServiceImp;
+
     /**
      *
      * @return
@@ -48,6 +58,11 @@ public class CustomerController {
     {
         return customerServiceImp.get_customer(id);
     }
+
+
+
+
+
 
     /**
      *
@@ -97,5 +112,22 @@ public class CustomerController {
 //        return modelAndView;
 //
 //    }
+
+    @RequestMapping("/cjobapplications")
+    public ModelAndView allJobs() {
+        Customer customer = customerServiceImp.findCustomerByUser(successfullLoginHandler.getUser());
+        List<Job> jobs = jobServiceImp.my_jobs(customer);
+
+        List<JobApplication> jobApplications = new ArrayList<>();
+
+        jobs.forEach(e->{
+
+           jobApplications.addAll(jobApplicationServiceImp.job_job_application(e));
+        });
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("jobaaplications",jobApplications);
+        modelAndView.setViewName("jobapplications");
+        return modelAndView;
+    }
 
 }

@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,6 +28,7 @@ public class FreelancerServiceImp implements FreelancerService
      */
     @Autowired
     private FreelancerRepo freelancerRepo;
+
     /**
      * @param freelancer
      */
@@ -37,6 +39,7 @@ public class FreelancerServiceImp implements FreelancerService
          */
         freelancerRepo.save(freelancer);
     }
+
     /**
      * @param id
      * @return
@@ -63,7 +66,6 @@ public class FreelancerServiceImp implements FreelancerService
     @Override
     public void update_freelancer(long id) {
 
-
     }
 
     /**
@@ -87,14 +89,17 @@ public class FreelancerServiceImp implements FreelancerService
         return freelancerRepo.findAll(pageable);
     }
 
+    /**
+     * @param fullName
+     * @param pageable
+     * @return
+     */
     @Override
-    public Page<Freelancer> searchByTerm(String fullName, Pageable pageable)
-    {
-        return null;
+    public Page<Freelancer> searchByTerm(String fullName, Pageable pageable) {
+        return freelancerRepo.findAll(pageable);
     }
 
     /**
-     *
      * @param user
      * @return
      */
@@ -103,13 +108,47 @@ public class FreelancerServiceImp implements FreelancerService
         return freelancerRepo.getFreelancerByUser(user);
     }
 
+    /**
+     * @param availability
+     * @return
+     */
     @Override
     public List<Freelancer> getAllByAvailability(String availability) {
         return freelancerRepo.getAllByAvailability(availability);
     }
 
+    /**
+     * @param skill
+     * @return
+     */
     @Override
     public List<Freelancer> getAllBySkill(String skill) {
         return freelancerRepo.getAllBySkill(skill);
+    }
+
+    /**
+     * @param searchTerm
+     * @return
+     */
+    @Override
+    public List<Freelancer> searchFreelancer(String searchTerm) {
+        List<Freelancer> freelancers = new ArrayList<>();
+        freelancerRepo.findAll().forEach(e -> {
+            Freelancer freelancer = e;
+            if (
+                    freelancer.getUser().getFullName().contains(searchTerm) ||
+                            freelancer.getUser().getEmail().contains(searchTerm) ||
+                            freelancer.getUser().getPhoneNumber().contains(searchTerm) ||
+                            freelancer.getAvailability().contains(searchTerm) ||
+                            freelancer.getEducationLevel().contains(searchTerm) ||
+                            freelancer.getBio().contains(searchTerm) ||
+                            freelancer.getSkill().getSkillDescription().contains(searchTerm) ||
+                            freelancer.getSkill().getSkillName().contains(searchTerm) ||
+                            freelancer.getSkill().getSkillCategory().contains(searchTerm)
+            ) {
+                freelancers.add(freelancer);
+            }
+        });
+        return freelancers;
     }
 }

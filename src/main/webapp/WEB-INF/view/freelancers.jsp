@@ -23,41 +23,41 @@
 <body>
 <jsp:include page="templates/customerheader.jsp"/>
 <section>
-    <div class="container  fa-align-center">
-        <div class="card-wrapper">
-            <div class="card fat">
-                <div class="card-header">
-                    <h4 class="float-left">List of Freelancers</h4>
-                    <ul class="float-right">
-                        <li>
-                            <form action="/searchFreelancer" class="form-inline my-2 my-lg-0 ">
-                                <input class="form-control mr-sm-2" name="searchTerm" type="search" placeholder="Search"
-                                       aria-label="Search">
-                                <input type="hidden" name="page" value="0"/>
-                                <input type="hidden" name="size" value="${maxTraySize}"/>
-                                <input class="btn btn-outline-primary my-2 my-sm-0" value="Search" type="submit">
-                            </form>
-                        </li>
-                    </ul>
-                </div>
-                <div class="card card-body table-responsive">
-                    <c:choose>
-                        <c:when test="${freelancers.size() > 0}">
-                            <c:forEach var="freelancer" items="${freelancers}">
-                                <img src="${freelancer.getUser().getImage()}"
-                                     alt="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
-                                     class="rounded-circle img-fluid" style="width: 180px; height: 120px">
-                                <h5 class="my-3">${freelancer.getUser().getFullName()}</h5>
-                                <p class="text-muted mb-1">${freelancer.getUser().getEmail()}</p>
-                                <p class="text-muted mb-4">${freelancer.getUser().getPhoneNumber()}</p>
-                            </c:forEach>
-                        </c:when>
-                        <c:otherwise>
-                            <h5>No Freelancer Found... Search again!</h5>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
-            </div>
+    <div class="card">
+        <div class="card-header">
+            <ul class="float-right">
+                <li>
+                    <form action="/freelancersearch" method="post" class="form-inline my-2 my-lg-0 ">
+                        <input class="form-control mr-sm-2" id="searchTerm" name="searchTerm" type="text"
+                               placeholder="Search"
+                               required
+                               aria-label="Search">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <%--                        <input type="hidden" name="page" value="0"/>--%>
+                        <%--                        <input type="hidden" name="size" value="${maxTraySize}"/>--%>
+                        <div class="form-group m-2">
+                            <input value="Search" type="submit" class=" btn btn-primary btn-block"/>
+                        </div>
+                    </form>
+                </li>
+            </ul>
+        </div>
+        <div class="card card-body ">
+            <c:choose>
+                <c:when test="${freelancers.size() > 0}">
+                    <c:forEach var="freelancer" items="${freelancers}">
+                        <img src="${freelancer.getUser().getImage()}"
+                             alt="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                             class="rounded-circle img-fluid" style="width: 180px; height: 120px">
+                        <h5 class="my-3">${freelancer.getUser().getFullName()}</h5>
+                        <p class="text-muted mb-1">${freelancer.getUser().getEmail()}</p>
+                        <p class="text-muted mb-4">${freelancer.getUser().getPhoneNumber()}</p>
+                    </c:forEach>
+                </c:when>
+                <c:otherwise>
+                    <h5>No Freelancer Found... Search again!</h5>
+                </c:otherwise>
+            </c:choose>
         </div>
     </div>
 </section>

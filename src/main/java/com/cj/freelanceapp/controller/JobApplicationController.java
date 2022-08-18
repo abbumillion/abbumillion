@@ -1,17 +1,29 @@
 package com.cj.freelanceapp.controller;
 
 
+import com.cj.freelanceapp.ServiceImp.FreelancerServiceImp;
 import com.cj.freelanceapp.ServiceImp.JobApplicationServiceImp;
 import com.cj.freelanceapp.ServiceImp.JobServiceImp;
 import com.cj.freelanceapp.dto.JobApplicationDTO;
+import com.cj.freelanceapp.helpers.STATUS;
+import com.cj.freelanceapp.model.Freelancer;
+import com.cj.freelanceapp.model.Job;
 import com.cj.freelanceapp.model.JobApplication;
+import com.cj.freelanceapp.security.SuccessfullLoginHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Date;
+import java.util.List;
+
 @RestController
 public class JobApplicationController {
+    @Autowired
+    SuccessfullLoginHandler successfullLoginHandler;
     /**
      * JOB APPLICATION SERVICE INJECTION
      */
@@ -21,6 +33,8 @@ public class JobApplicationController {
      * JOB SERVICE INJECTION
      */
     @Autowired
+    FreelancerServiceImp freelancerServiceImp;
+    @Autowired
     JobServiceImp jobServiceImp;
     private Long jobId;
 
@@ -29,18 +43,21 @@ public class JobApplicationController {
      * @param id
      * @return
      */
-    @RequestMapping("/apply{id}")
-    public ModelAndView addJobApplication(Long id) {
-        jobId = id;
-//         job = jobServiceImp.get_job(id);
-//         System.out.println(job.getCustomer().getUser().getFullName());
-//        JobApplication jobApplication = JobApplication.builder()
-//                .coverLetter(jobApplicationDTO.getCoverLetter())
-//                .job(jobApplicationDTO.getJob())
-//                .applicationDate(jobApplicationDTO.getApplicationDate())
-//                .build();
-//        jobApplicationServiceImp.add_job_application(jobApplication);
-        return new ModelAndView("applyform");
+    @RequestMapping("/apply")
+    public ModelAndView addJobApplication(@RequestParam("coverLetter") String coverLetter,
+                                          @RequestParam("id") Long id) {
+        Job job = jobServiceImp.get_job(id);
+        Freelancer freelancer = freelancerServiceImp.getFreelancerByUser(successfullLoginHandler.getUser());
+        JobApplication jobApplication = JobApplication
+                .builder()
+                .applicationDate(new Date().toGMTString())
+                .coverLetter(coverLetter)
+                .job(job)
+                .freelancer(freelancer)
+                .status(STATUS.INREVIEW.name())
+                .build();
+        jobApplicationServiceImp.add_job_application(jobApplication);
+        return new ModelAndView("appliedsuccessfully");
     }
 
     /**
@@ -48,12 +65,12 @@ public class JobApplicationController {
      * @param jobApplicationDTO
      * @return
      */
-    @RequestMapping("/applyforjob")
-    public String applyforjob(JobApplicationDTO jobApplicationDTO) {
-        System.out.println(jobServiceImp.get_job(jobId));
-        System.out.println(jobApplicationDTO);
-        return "jobapplications";
-    }
+//    @RequestMapping("/applyforjob{id}")
+//    public String applyforjob(JobApplicationDTO jobApplicationDTO) {
+//        System.out.println(jobServiceImp.get_job(jobId));
+//        System.out.println(jobApplicationDTO);
+//        return "jobapplications";
+//    }
 
     /**
      * JOB APPLICATION
@@ -81,9 +98,12 @@ public class JobApplicationController {
      * @return
      */
     @RequestMapping("/jobapplications")
-    public String allJobs() {
-        jobApplicationServiceImp.all_job_application();
-        return "jobs.jsp";
+    public ModelAndView allJobs() {
+        List<JobApplication> jobApplications = jobApplicationServiceImp.all_job_application();
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("jobaaplications",jobApplications);
+        modelAndView.setViewName("jobApplications");
+        return modelAndView;
     }
 
     /**

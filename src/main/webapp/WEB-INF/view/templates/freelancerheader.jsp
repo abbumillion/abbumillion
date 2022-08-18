@@ -20,7 +20,7 @@
                 <a class="nav-link" href="/jobs">Jobs</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="/jobapplications">Job Applications</a>
+                <a class="nav-link" href="/fjobapplications">Job Applications</a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="/freelancerprofile">My Profile</a>

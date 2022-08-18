@@ -49,9 +49,5 @@ public class Feedback {
 	/**
 	 * USER WHO SENT THE FEED BACK
 	 */
-	@ManyToOne
-	private User user;
-
-
 
 }

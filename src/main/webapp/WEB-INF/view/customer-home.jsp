@@ -28,7 +28,6 @@
         <div class="row justify-content-md-center">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="float-left">List of Users</h4>
                     <ul class="float-right">
                         <li>
                             <form action="/searchBox" class="form-inline my-2 my-lg-0 ">
@@ -36,7 +35,10 @@
                                        aria-label="Search">
                                 <input type="hidden" name="page" value="0"/>
                                 <input type="hidden" name="size" value="${maxTraySize}"/>
-                                <input class="btn btn-outline-primary my-2 my-sm-0" value="Search" type="submit">
+                                <div class="form-group m-2">
+                                    <button type="submit" class=" btn btn-primary btn-block">Search
+                                    </button>
+                                </div>
                             </form>
                         </li>
                     </ul>

@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -74,13 +75,19 @@ public class JobController
         /**
          * GET THE SKILL OBJECT
          */
+
+        System.out.println(jobDTO.getDescription());
+
+        StringBuilder stringBuilder = new StringBuilder(jobDTO.getDescription());
+
+
         User user = successfullLoginHandler.getUser();
         Skill skill = skillServiceImp.getSkillBySkillName(jobDTO.getSkill());
         Customer customer = customerServiceImp.findCustomerByUser(user);
         Job job = Job.builder()
                 .budget(jobDTO.getBudget())
                 .customer(customer)
-                .description(jobDTO.getDescription())
+                .description(stringBuilder.toString())
                 .endDate(jobDTO.getEnddate())
                 .posted(jobDTO.getPosted())
                 .skill(skill)
@@ -88,7 +95,9 @@ public class JobController
                 .educationLevel(jobDTO.getEducationLevel())
                 .build();
         jobServiceImp.add_job(job);
-        ModelAndView modelAndView = new ModelAndView("jobs");
+        List<Job> allJobs = jobServiceImp.my_jobs(customerServiceImp.findCustomerByUser(successfullLoginHandler.getUser()));
+        ModelAndView modelAndView = new ModelAndView("myjobs");
+        modelAndView.addObject("allJobs", allJobs);
         return modelAndView;
     }
 
@@ -172,17 +181,55 @@ public class JobController
      * @param job
      * @return
      */
-    @RequestMapping("/api/editjob")
-    public String editJob(JobDTO job) {
-        return "editjob.jsp";
+    @RequestMapping("/job{id}")
+    public ModelAndView editJob(@PathVariable Long id) {
+        Job job = jobServiceImp.get_job(id);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("job",job);
+        modelAndView.setViewName("job");
+        return modelAndView;
     }
+    @RequestMapping("/myjob{id}")
+    public ModelAndView myjob(@PathVariable Long id) {
+        Job job = jobServiceImp.get_job(id);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("job",job);
+        modelAndView.setViewName("myjob");
+        return modelAndView;
+    }
+
+    @RequestMapping("/jobsearch")
+    public ModelAndView jobsearch(@RequestParam("searchTerm") String searchTerm) {
+        List<Job> jobs = jobServiceImp.searchJob(searchTerm);
+//        System.out.println(jobs.size());
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("allJobs",jobs);
+        modelAndView.setViewName("jobs");
+        return modelAndView;
+    }
+
+    @RequestMapping("/myjobsearch")
+    public ModelAndView myjobsearch(@RequestParam("searchTerm") String searchTerm) {
+        List<Job> jobs = jobServiceImp.searchJob(searchTerm);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("allJobs",jobs);
+        modelAndView.setViewName("myjobs");
+        return modelAndView;
+    }
+
     /**
-     * @param job
+     *
+     * @param id
      * @return
      */
-    @RequestMapping("/api/deletejob")
-    public String deleteJob(JobDTO job) {
-//        jobServiceImp.delete_job(job);
-        return "deletejob.jsp";
+    @RequestMapping("/deletejob{id}")
+    public ModelAndView deleteJob(@PathVariable Long id) {
+        jobServiceImp.delete_job(id);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("myjobs");
+        List<Job> allJobs = jobServiceImp.my_jobs(customerServiceImp.findCustomerByUser(successfullLoginHandler.getUser()));
+        modelAndView.addObject("allJobs", allJobs);
+        return modelAndView;
     }
 }

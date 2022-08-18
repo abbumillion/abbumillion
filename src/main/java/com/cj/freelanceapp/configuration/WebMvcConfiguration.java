@@ -95,7 +95,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
         /**
          * logout page
          */
-        registry.addViewController("/logout").setViewName("login");
+        registry.addViewController("/logout").setViewName("/login");
         /**
          * post job
          */
@@ -103,15 +103,23 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
         /**
          * job skills
          */
+        registry.addViewController("/uploadcv").setViewName("uploadcv");
+
         registry.addViewController("/uploadimage").setViewName("uploadimage");
         /**
          * skill search
          */
-        registry.addViewController("/skillseacrh").setViewName("skillsearch");
+        registry.addViewController("/appliedsuccessfully").setViewName("appliedsuccessfully");
         /**
          * FREELANCER REGISTRATION VIEW
          */
         registry.addViewController("/buildprofile").setViewName("buildprofile");
+        registry.addViewController("/job").setViewName("job");
+        registry.addViewController("/fjobapplications").setViewName("fjobapplications");
+        registry.addViewController("/myjob").setViewName("myjob");
+        registry.addViewController("/jobsearch").setViewName("jobsearch");
+//        registry.addViewController("/job").setViewName("job");
+
     }
 
     /**

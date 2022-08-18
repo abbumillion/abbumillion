@@ -30,7 +30,8 @@ public class UserServiceImpl implements UserService {
     private PasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public User findUserByFullName(String fullName) {
+    public User findUserByFullName(String fullName)
+    {
         return null;
     }
 

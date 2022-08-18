@@ -2,6 +2,7 @@ package com.cj.freelanceapp.service;
 
 
 import com.cj.freelanceapp.model.Freelancer;
+import com.cj.freelanceapp.model.Job;
 import com.cj.freelanceapp.model.Skill;
 import com.cj.freelanceapp.model.User;
 import org.springframework.data.domain.Page;
@@ -65,5 +66,17 @@ public interface FreelancerService {
 
     List<Freelancer> getAllByAvailability(String availability);
 
+    /**
+     * GET ALL FREELANCERS WITH SPECIFIED SKILL
+     * @param skill
+     * @return
+     */
     List<Freelancer> getAllBySkill(String skill);
+
+    /**
+     * SEARCH FREELANCER
+     * @param searchTerm
+     * @return
+     */
+    List<Freelancer> searchFreelancer(String searchTerm);
 }

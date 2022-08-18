@@ -2,6 +2,7 @@ package com.cj.freelanceapp.controller;
 
 
 import com.cj.freelanceapp.ServiceImp.FreelancerServiceImp;
+import com.cj.freelanceapp.ServiceImp.JobApplicationServiceImp;
 import com.cj.freelanceapp.ServiceImp.SkillServiceImp;
 import com.cj.freelanceapp.dto.FreelancerDTO;
 import com.cj.freelanceapp.dto.FreelancerProfileDTO;
@@ -9,6 +10,7 @@ import com.cj.freelanceapp.dto.UserDTO;
 import com.cj.freelanceapp.exception.EthioFreelancingApplicationException;
 import com.cj.freelanceapp.helpers.EDUCATIONLEVEL;
 import com.cj.freelanceapp.model.Freelancer;
+import com.cj.freelanceapp.model.JobApplication;
 import com.cj.freelanceapp.model.Skill;
 import com.cj.freelanceapp.model.User;
 import com.cj.freelanceapp.security.SuccessfullLoginHandler;
@@ -47,6 +49,9 @@ public class FreelancerController {
      */
     @Autowired
     private SkillServiceImp skillServiceImp;
+
+    @Autowired
+    JobApplicationServiceImp jobApplicationServiceImp;
 
     /**
      * INJECTING FREELANCER SERVICE TO THE
@@ -215,53 +220,100 @@ public class FreelancerController {
         Freelancer freelancer = freelancerServiceImp.getFreelancerByUser(successfullLoginHandler.getUser());
         List<Skill> skills = skillServiceImp.all_skill();
         List<String> els = new ArrayList<>();
-        for (EDUCATIONLEVEL educationlevel : EDUCATIONLEVEL.values())
-        {
+        for (EDUCATIONLEVEL educationlevel : EDUCATIONLEVEL.values()) {
             els.add(educationlevel.name());
         }
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("skills", skills);
-        modelAndView.addObject("els",els);
+        modelAndView.addObject("els", els);
         modelAndView.setViewName("buildprofile");
         return modelAndView;
 
     }
 
-        @RequestMapping("/saveprofile")
+    @RequestMapping("/saveprofile")
     public ModelAndView buildProfile(FreelancerProfileDTO freelancerProfileDTO) {
-            /**
-             * GET FREELANCER BY USING LOGGED IN USER ACCOUNT
-             */
+        /**
+         * GET FREELANCER BY USING LOGGED IN USER ACCOUNT
+         */
         Freelancer freelancer = freelancerServiceImp.getFreelancerByUser(successfullLoginHandler.getUser());
-            /**
-             * GET SKILL CHOOSEN BY THE USER
-             */
+        /**
+         * GET SKILL CHOOSEN BY THE USER
+         */
         Skill skill = skillServiceImp.getSkillBySkillName(freelancerProfileDTO.getSkill());
-            /**
-             * CONVERT DTO DATA TO FREELANCER SETTERS
-             */
+        /**
+         * CONVERT DTO DATA TO FREELANCER SETTERS
+         */
         freelancer.setAvailability(freelancerProfileDTO.getAvailability());
         freelancer.setBio(freelancerProfileDTO.getBio());
         freelancer.setEducationLevel(freelancerProfileDTO.getEducationLevel());
         freelancer.setSkill(skill);
-            /**
-             * SAVE THE FREELANCER TO THE DATABASE
-             */
+        /**
+         * SAVE THE FREELANCER TO THE DATABASE
+         */
         freelancerServiceImp.add_freelancer(freelancer);
-            /**
-             *
-             */
+        /**
+         *
+         */
         ModelAndView modelAndView = new ModelAndView();
-            /**
-             * REDIRECT IT THE LOGIN PAGE
-             */
+        /**
+         * REDIRECT IT THE LOGIN PAGE
+         */
         modelAndView.setViewName("freelancerprofile");
-            /**
-             * RETURN THE MODEL AND VIEW OBJECT
-             */
+        /**
+         * RETURN THE MODEL AND VIEW OBJECT
+         */
         return modelAndView;
     }
 
+    @RequestMapping("/fjobapplications")
+    public ModelAndView jobapps() {
+        Freelancer freelancer = freelancerServiceImp.getFreelancerByUser(successfullLoginHandler.getUser());
+        List<JobApplication> jobApplications = jobApplicationServiceImp.freelancer_job_application(freelancer);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("jobaaplications", jobApplications);
+        modelAndView.setViewName("fjobapplications");
+        return modelAndView;
+    }
 
+    @RequestMapping("/freelancersearch")
+    public ModelAndView myjobsearch(@RequestParam("searchTerm") String searchTerm) {
+        List<FreelancerDTO> freelancerDTOS = new ArrayList<>();
+        /**
+         * ITERATE THROUGH THE LIST OF FREELANCERS
+         * AND CONVERT IT TO FREELANCER DTO AND ADD IT TO
+         * LIST OF FREELANCER DTO
+         */
+        freelancerServiceImp.searchFreelancer(searchTerm).forEach(e -> {
+            Freelancer freelancer = (Freelancer) e;
+            FreelancerDTO freelancerDTO =
+                    FreelancerDTO
+                            .builder()
+                            .Id(freelancer.getId())
+                            .user(
+                                    UserDTO
+                                            .builder()
+                                            .email(freelancer.getUser().getEmail())
+                                            .fullName(freelancer.getUser().getFullName())
+                                            .id(freelancer.getUser().getId())
+                                            .isActive(freelancer.getUser().isActive())
+                                            .password(freelancer.getUser().getPassword())
+                                            .phoneNumber(freelancer.getUser().getPhoneNumber())
+                                            .role(freelancer.getUser().getRole())
+                                            .rating(freelancer.getRating())
+                                            .image(freelancer.getUser().getImage())
+                                            .build()
+                            )
+                            .build();
+            freelancerDTOS.add(freelancerDTO);
+        });
+
+        /**
+         * return new model and view object
+         */
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("freelancers", freelancerDTOS);
+        return modelAndView;
+    }
 
 }

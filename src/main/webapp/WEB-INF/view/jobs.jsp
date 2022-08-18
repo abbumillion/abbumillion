@@ -25,41 +25,55 @@
 <section>
     <div class="card">
         <div class="card-header">
-            <h4 class="float-left">Jobs</h4>
             <ul class="float-right">
                 <li>
-                    <form action="/searchBox" class="form-inline my-2 my-lg-0 ">
-                        <input class="form-control mr-sm-2" name="searchTerm" type="search" placeholder="Search"
+                    <form action="/jobsearch" method="post" class="form-inline my-2 my-lg-0 ">
+                        <input class="form-control mr-sm-2"  id="searchTerm" name="searchTerm" type="text" placeholder="Search"
+                               required
                                aria-label="Search">
-                        <input type="hidden" name="page" value="0"/>
-                        <input type="hidden" name="size" value="${maxTraySize}"/>
-                        <input class="btn btn-primary " value="Search" type="submit">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <%--                        <input type="hidden" name="page" value="0"/>--%>
+                        <%--                        <input type="hidden" name="size" value="${maxTraySize}"/>--%>
+                        <div class="form-group m-2">
+                            <input value="Search" type="submit"  class=" btn btn-primary btn-block"/>
+                        </div>
                     </form>
                 </li>
             </ul>
         </div>
         <c:forEach var="job" items="${allJobs}">
-            <div class="card large-width">
-                <div class="card-body">
-                    <h5 class="card-title">${job.getSkill().getSkillName()}</h5>
-                    <p class="card-text">${job.getDescription()}</p>
+        <div class="col-xl-10 justify-content-center">
+            <!-- single-job-content -->
+            <div class="single-job-items mb-30">
+                <div class="job-items">
+                    <div class="company-img">
+                        <a href="/login"><img src="resources/img/job.png" alt=""></a>
+                    </div>
+                    <div class="job-tittle">
+                        <ul>
+                            <li id="jobskill">${job.getSkill().getSkillName()}</li>
+                            <li id="jobtype">Job Type:${job.getType()}</li>
+                            <li id="budget">${job.getBudget()}&nbsp;birr</li>
+                            <li id="enddate">${job.getEndDate()}</li>
+                        </ul>
+                    </div>
                 </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Job Type: ${job.getType()}</li>
-                    <li class="list-group-item">Salary :${job.getBudget()}&nbsp;birr</li>
-                    <li class="list-group-item">Education Level :${job.getEducationLevel()}</li>
-                </ul>
-                <div class="card-footer text-muted">
-                    Posted on: ${job.getPosted()} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; End Date : ${job.getEndDate()}
-                </div>
-                <div class="card-body">
-                    <a class="btn" href="/applyForJob${job.getJobId()}">Apply</a>
+                <div class="form-group m-2">
+                    <a href="/job${job.getJobId()}" class=" btn btn-primary btn-block">Apply
+                    </a>
                 </div>
             </div>
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        </div>
         </c:forEach>
-    </div>
 </section>
+
+<script>
+    function apply(id) {
+
+    }
+</script>
+
+
 <jsp:include page="templates/copyright.jsp"/>
 <!-- JS here -->
 <script src="resources/js/vendor/modernizr-3.5.0.min.js"></script>
@@ -81,13 +95,11 @@
 <script src="resources/js/jquery.scrollUp.min.js"></script>
 <script src="resources/js/jquery.nice-select.min.js"></script>
 <script src="resources/js/jquery.sticky.js"></script>
-<!-- contact js -->
 <script src="resources/js/contact.js"></script>
 <script src="resources/js/jquery.form.js"></script>
 <script src="resources/js/jquery.validate.min.js"></script>
 <script src="resources/js/mail-script.js"></script>
 <script src="resources/js/jquery.ajaxchimp.min.js"></script>
-<!-- Jquery Plugins, main Jquery -->
 <script src="resources/js/plugins.js"></script>
 <script src="resources/js/main.js"></script>
 </body>

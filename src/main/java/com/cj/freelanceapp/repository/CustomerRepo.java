@@ -41,7 +41,4 @@ public interface CustomerRepo extends JpaRepository<Customer, Long>
      * @param feedback
      * @return
      */
-    Customer findByFeedback(Feedback feedback);
-
-
 }

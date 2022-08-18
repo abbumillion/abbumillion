@@ -42,8 +42,13 @@
             <li class="nav-item active">
                 <a class="nav-link" style="color: #ffffff;" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
+
             <li class="nav-item active">
-                <a class="nav-link" style="color:#ffffff;" href="/about">About</a>
+                <a class="nav-link" style="color:#ffffff;" href="/contactus">Contact Us</a>
+            </li>
+
+            <li class="nav-item active">
+                <a class="nav-link" style="color:#ffffff;" href="/about">About Us</a>
             </li>
         </ul>
         <div>
@@ -110,40 +115,31 @@
             </div>
         </div>
     </div>
-    <!-- How  Apply Process End-->
-    <!-- Online CV Area Start -->
-
 </main>
-
 <jsp:include page="templates/copyright.jsp"/>
 <script src="resources/js/vendor/modernizr-3.5.0.min.js"></script>
 <script src="resources/js/vendor/jquery-1.12.4.min.js"></script>
 <script src="resources/js/popper.min.js"></script>
 <script src="resources/js/bootstrap.min.js"></script>
 <script src="resources/js/jquery.slicknav.min.js"></script>
-
 <!-- Jquery Slick , Owl-Carousel Plugins -->
 <script src="resources/js/owl.carousel.min.js"></script>
 <script src="resources/js/slick.min.js"></script>
 <script src="resources/js/price_rangs.js"></script>
-
 <!-- One Page, Animated-HeadLin -->
 <script src="resources/js/wow.min.js"></script>
 <script src="resources/js/animated.headline.js"></script>
 <script src="resources/js/jquery.magnific-popup.js"></script>
-
 <!-- Scrollup, nice-select, sticky -->
 <script src="resources/js/jquery.scrollUp.min.js"></script>
 <script src="resources/js/jquery.nice-select.min.js"></script>
 <script src="resources/js/jquery.sticky.js"></script>
-
 <!-- contact js -->
 <script src="resources/js/contact.js"></script>
 <script src="resources/js/jquery.form.js"></script>
 <script src="resources/js/jquery.validate.min.js"></script>
 <script src="resources/js/mail-script.js"></script>
 <script src="resources/js/jquery.ajaxchimp.min.js"></script>
-
 <!-- Jquery Plugins, main Jquery -->
 <script src="resources/js/plugins.js"></script>
 <script src="resources/js/main.js"></script>

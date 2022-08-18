@@ -71,7 +71,7 @@ public class EFASecurity extends WebSecurityConfigurerAdapter
                  */
                 .authorizeRequests()
                 .antMatchers("/console/**", "/", "/signup", "/register", "/about", "/resources/**",
-                        "/UserImages/**", "/contactus/**").permitAll()
+                        "/contactus/**","/addfeedback").permitAll()
                 /**
                  * those end points should be authenticated
                  * not accessable without login
@@ -108,7 +108,6 @@ public class EFASecurity extends WebSecurityConfigurerAdapter
                  */
                 .formLogin().loginPage("/login")
                 .successHandler(successfullLoginHandler)
-
                 /**
                  * login parameter email
                  */
@@ -121,7 +120,7 @@ public class EFASecurity extends WebSecurityConfigurerAdapter
                 /**
                  * logout success page for all users
                  */
-                .logout().logoutSuccessUrl("/login")
+                .logout().logoutSuccessUrl("/")
                 .and()
                 /**
                  * access denied page
@@ -143,7 +142,7 @@ public class EFASecurity extends WebSecurityConfigurerAdapter
                 /**
                  * max session time period prevents login
                  */
-                .maxSessionsPreventsLogin(false)
+                .maxSessionsPreventsLogin(true)
                 /**
                  * expired url
                  */
