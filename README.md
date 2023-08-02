@@ -1,5 +1,3 @@
-###    Million Sharbe Sokora 
-###    Software Developer from Batu/ziway,Oromia, Ethiopia
 ####  - I’m currently working on..............java,javafx,kotlin
 ####  - I’m currently learning................spring-boot
 ####  - I’m looking to collaborate on.........java/kotlin/javafx
