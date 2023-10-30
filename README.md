@@ -1,3 +1,3 @@
 
-####  - sharbemillion599@gmail.com/+251923683988/+251911060514/+251927997800
+####  - sharbemillion599@gmail.com/+251923683988
 
